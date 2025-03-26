@@ -1,0 +1,6 @@
+print "Enter how many times to loop"
+item x
+input x
+loop i x times:
+    print "hi"
+    print i
