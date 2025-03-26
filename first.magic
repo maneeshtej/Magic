@@ -1,6 +1,16 @@
-print "Enter how many times to loop"
-item x
-input x
-loop i x times:
-    print "hi"
-    print i
+print "Calculator"
+item a
+item b
+item s
+
+loop i 10 times:
+    input a 
+    input b
+    input s
+
+    if s == "+":
+        print a + b
+    if s == "-":
+        print a - b
+
+

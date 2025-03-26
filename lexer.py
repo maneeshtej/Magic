@@ -1,7 +1,3 @@
-
-
-
-
 import re
 
 TOKEN_TYPES = {
@@ -14,32 +10,37 @@ TOKEN_TYPES = {
     "ELSE": r"\belse\b",               # else condition
     "ELIF": r"\belif\b",               # else if condition
     "TIMES": r"\btimes\b",             # Match "times" (without colon)
+    "PLUS": r"\+",                     # Addition operator "+"
+    "MINUS": r"-",                     # Subtraction operator "-"
+    "COMPARISON": r"==|!=|<=|>=|<|>",  # Ensure "==" is matched before "="
+    "EQUALS": r"=",                    # Assignment operator "="
+    "MULTIPLY": r"\*",                 # Multiplication operator "*"
+    "DIVIDE": r"/",                    # Division operator "/"
     "IDENTIFIER": r"[a-zA-Z_]\w*",     # Variable names (x, var1, my_var)
     "NUMBER": r"\d+",                  # Numbers (10, 20)
-    "EQUALS": r"=",                    # Assignment operator =
     "STRING": r'"[^"]*"',              # Strings like "hello world"
-    "COMPARISON": r"[<>!=]=?|==",      # Comparison operators (<, >, ==, !=, >=, <=)
     "COLON": r":",                     # Explicitly match ":"
     "COMMA": r",",                     # Comma
     "NEWLINE": r"\n",                  # New lines
     "WHITESPACE": r"[ ]+",             # Spaces (no tabs)
-    "AND": r"\band\b",
-    "OR": r"\bor\b",
+    "AND": r"\band\b",                 # Logical AND
+    "OR": r"\bor\b",                   # Logical OR
 }
+
+
 
 class Lexer:
     def __init__(self, code):
         self.code = code
         self.tokens = []
         self.position = 0
-        self.indent_stack = [0]  # Track indentation levels
+        self.indent_stack = [0]  
 
     def tokenize(self):
-        lines = self.code.split("\n")  # Split into lines
+        lines = self.code.split("\n")  
         for line in lines:
             self.process_line(line)
         
-        # At the end of the file, close all remaining indents
         while len(self.indent_stack) > 1:
             self.tokens.append(("DEDENT", ""))
             self.indent_stack.pop()
@@ -48,7 +49,7 @@ class Lexer:
 
     def process_line(self, line):
         """Handles indentation and tokenization for each line."""
-        if not line.strip():  # Ignore empty lines
+        if not line.strip(): 
             return
         
         match = re.match(r"([ ]*)(.*)", line)  # Capture leading spaces and the rest
